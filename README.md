@@ -1,33 +1,23 @@
-# 轻松泰拉 / Terraria Less Grind v1.0.2
+# 轻松泰拉 / Terraria Less Grind
 
-适用于 TEF KernelLoader 的轻量原生模组工程（目标游戏版本 1.4.4.0–1.4.5.6）。
+作者：liuxin  
+版本：1.1.0
 
-## 功能
+目标：减少重复刷取和制作，不修改伤害，不直接赠送装备，不跳过 Boss。
 
-- 常见建筑材料的原版合成产出 ×3。
-- 常用药水的原版合成产出 ×5，减少重复点击制作。
-- Boss 召唤物配方中数量大于 1 的材料减半（向上取整）。
-- 稀有材料保底掉落：腐肉、脊椎骨、晶状体、毒刺。
+## v1.1.0 功能
 
-不修改武器伤害、防御、Boss 生命值、Boss 掉落或角色属性。
+1. 建筑材料合成产量 ×3
+   - 自动识别实心建筑方块、平台和墙
+   - 不再使用容易写错的大量 Item ID 列表
+2. 常用药水批量制作 ×5
+   - 覆盖恢复、战斗、探索、建筑、钓鱼、幸运等常用药水
+3. Boss 召唤物重复制作成本降低
+   - 可制作的 Boss 召唤物材料数量约减半，最低仍为 1
+4. 常用刷怪材料击杀保底
+   - 腐肉、椎骨、晶状体、毒刺、蚁狮上颚、羽毛、鲨鱼鳍、海龟壳
 
-## 构建
+## v1.0.4 关键修复保留
 
-直接将本工程上传到 GitHub 仓库，打开 **Actions → Build Terraria Less Grind → Run workflow**。构建完成后，下载 `轻松泰拉(Terraria Less Grind)` 工件；该下载的 ZIP 可直接导入 TEFManager。
-
-如需本地构建，可使用 Android NDK r28：
-
-```text
-cmake --preset android-arm64-release
-cmake --build --preset android-arm64-release
-```
-
-最终 ZIP 的内部结构与 TEFManager 模组一致：`Manifest.json`、`mymod.json`、`Info.json` 与 `Resources/lib/libLessGrind.android.arm64.so`。
-
-首次测试时，请查看日志中是否包含：
-
-```text
-LessGrind: Recipe hook: ready
-LessGrind: Drop hook: ready
-LessGrind: Recipe hook: ready (no forced rebuild)
-```
+TEFKernel 的 `patchlib_array_at()` 和 `patchlib_method_invoke_args()` 返回 `bool`，
+`true` 表示成功。v1.0.4 已修复旧版把成功当失败的问题，v1.1.0 继续沿用该逻辑。
