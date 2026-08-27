@@ -28,16 +28,17 @@ jobs:
       - name: Build native library
         run: cmake --build build/android-arm64 --parallel
 
-      - name: Collect Android ARM64 shared library
+      - name: Assemble TEFManager mod package
         run: |
-          mkdir -p dist
-          so_file="$(find build/android-arm64 -type f -name 'LessGrind*.so' -print -quit)"
+          mkdir -p package/LessGrind/Resources/lib
+          so_file="$(find build/android-arm64 -type f -name 'libLessGrind.android.arm64.so' -print -quit)"
           test -n "$so_file"
-          cp "$so_file" dist/LessGrind.android.arm64.so
+          cp LessGrind/Manifest.json LessGrind/mymod.json LessGrind/Info.json package/LessGrind/
+          cp "$so_file" package/LessGrind/Resources/lib/libLessGrind.android.arm64.so
 
-      - name: Publish Android ARM64 shared library
+      - name: Publish TEFManager mod ZIP
         uses: actions/upload-artifact@v4
         with:
-          name: LessGrind.android.arm64.so
-          path: dist/LessGrind.android.arm64.so
+          name: 轻松泰拉(Terraria Less Grind)
+          path: package/LessGrind/
           if-no-files-found: error
