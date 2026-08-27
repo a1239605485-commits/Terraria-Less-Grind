@@ -89,7 +89,6 @@ macro(add_terraria_mod MOD_NAME)
         set_target_properties(${MOD_NAME} PROPERTIES
                 OUTPUT_NAME "${MOD_NAME}.${LOCAL_SYSTEM}.${LOCAL_ARCH}"
                 SUFFIX ".so"
-                PREFIX ""
         )
     endif()
 

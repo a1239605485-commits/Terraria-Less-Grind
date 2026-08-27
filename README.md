@@ -13,7 +13,7 @@
 
 ## 构建
 
-直接将本工程上传到 GitHub 仓库，打开 **Actions → Build Terraria Less Grind → Run workflow**。构建完成后，在该次运行页面下载 `LessGrind.android.arm64.so` 工件；下载内容就是可直接使用的 `LessGrind.android.arm64.so` 文件，不会再打包为 `.tefpkg`。
+直接将本工程上传到 GitHub 仓库，打开 **Actions → Build Terraria Less Grind → Run workflow**。构建完成后，下载 `轻松泰拉(Terraria Less Grind)` 工件；该下载的 ZIP 可直接导入 TEFManager。
 
 如需本地构建，可使用 Android NDK r28：
 
@@ -22,7 +22,7 @@ cmake --preset android-arm64-release
 cmake --build --preset android-arm64-release
 ```
 
-构建产物为 `LessGrind.android.arm64.so`。GitHub Actions 会在编译结束后自动定位 CMake 实际生成的 `.so`，统一输出为此文件名。
+最终 ZIP 的内部结构与 TEFManager 模组一致：`Manifest.json`、`mymod.json`、`Info.json` 与 `Resources/lib/libLessGrind.android.arm64.so`。
 
 首次测试时，请查看日志中是否包含：
 
