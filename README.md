@@ -13,7 +13,7 @@
 
 ## 构建
 
-直接将本工程上传到 GitHub 仓库，打开 **Actions → Build Terraria Less Grind → Run workflow**。构建完成后，在该次运行页面下载 `Terraria-Less-Grind-v1.0.0-AndroidARM64` 工件，其中的 `.tefpkg` 就是导入 TEFManager 的安装包。
+直接将本工程上传到 GitHub 仓库，打开 **Actions → Build Terraria Less Grind → Run workflow**。构建完成后，在该次运行页面下载 `LessGrind.android.arm64.so` 工件；下载内容就是可直接使用的 `LessGrind.android.arm64.so` 文件，不会再打包为 `.tefpkg`。
 
 如需本地构建，可使用 Android NDK r28：
 
@@ -22,7 +22,7 @@ cmake --preset android-arm64-release
 cmake --build --preset android-arm64-release
 ```
 
-构建产物应为 `libLessGrind.android.arm64.so`。打包时与 `LessGrind.json`、`Manifest.json` 放在同一模组目录，再压缩为 zip 后导入 TEFManager。
+构建产物为 `LessGrind.android.arm64.so`。
 
 首次测试时，请查看日志中是否包含：
 
