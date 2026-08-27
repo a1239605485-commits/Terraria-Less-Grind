@@ -2,21 +2,46 @@
   "pkgId": "celso.lessgrind",
   "name": "轻松泰拉 (Terraria Less Grind)",
   "author": "liuxin",
-  "version": "1.0.3",
-  "versionCode": 202608273,
+  "version": "1.0.4",
+  "versionCode": 202608274,
   "brieflyDescribe": "减少重复刷取和制作，不改伤害、不送装备、不跳过 Boss。",
   "description": "建筑材料合成三倍、常用药水批量制作、Boss 召唤物降低制作成本、稀有材料击杀保底。",
   "features": [],
   "sizeCategory": "TINY",
-  "targetGameVersion": "1.4.5.6",
+  "targetGameVersion": "1.4.5.6.4",
   "minGameVersion": "1.4.4.0",
-  "maxGameVersion": "1.4.5.6",
+  "maxGameVersion": "1.4.5.6.4",
   "support": {
-    "android": {"arm64": true, "arm": false, "x64": false, "x86": false},
-    "windows": {"arm64": false, "arm": false, "x64": false, "x86": false},
-    "linux": {"arm64": false, "arm": false, "x64": false, "x86": false},
-    "mac": {"arm64": false, "arm": false, "x64": false, "x86": false},
-    "ios": {"arm64": false, "arm": false, "x64": false, "x86": false}
+    "android": {
+      "arm64": true,
+      "arm": false,
+      "x64": false,
+      "x86": false
+    },
+    "windows": {
+      "arm64": false,
+      "arm": false,
+      "x64": false,
+      "x86": false
+    },
+    "linux": {
+      "arm64": false,
+      "arm": false,
+      "x64": false,
+      "x86": false
+    },
+    "mac": {
+      "arm64": false,
+      "arm": false,
+      "x64": false,
+      "x86": false
+    },
+    "ios": {
+      "arm64": false,
+      "arm": false,
+      "x64": false,
+      "x86": false
+    }
   },
   "dependence": [],
   "conflicts": [],
