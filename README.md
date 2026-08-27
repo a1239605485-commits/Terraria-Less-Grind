@@ -11,3 +11,23 @@
 
 不修改武器伤害、防御、Boss 生命值、Boss 掉落或角色属性。
 
+## 构建
+
+直接将本工程上传到 GitHub 仓库，打开 **Actions → Build Terraria Less Grind → Run workflow**。构建完成后，下载 `轻松泰拉(Terraria Less Grind)` 工件；该下载的 ZIP 可直接导入 TEFManager。
+
+如需本地构建，可使用 Android NDK r28：
+
+```text
+cmake --preset android-arm64-release
+cmake --build --preset android-arm64-release
+```
+
+最终 ZIP 的内部结构与 TEFManager 模组一致：`Manifest.json`、`mymod.json`、`Info.json` 与 `Resources/lib/libLessGrind.android.arm64.so`。
+
+首次测试时，请查看日志中是否包含：
+
+```text
+LessGrind: Recipe hook: ready
+LessGrind: Drop hook: ready
+LessGrind: Recipes updated:
+```

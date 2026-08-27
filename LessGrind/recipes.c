@@ -103,6 +103,13 @@ void less_grind_recipes_init(void) {
     patch_handle_t setup = patchlib_type_get_method_by_param_count(recipe_type, "SetupRecipes", 0);
     if (g_main_recipes && g_recipe_create && g_recipe_required && g_item_type && g_item_stack && setup) {
         g_hook = patchlib_install_prepost_hook(setup, NULL, on_setup_recipes);
+        /* KernelLoader initializes mods after vanilla's first recipe build.
+         * Rebuild once now so the postfix runs in the current game session. */
+        if (g_hook != PATCH_HOOK_INVALID_ID) {
+            if (patchlib_method_invoke_args(setup, NULL, NULL, NULL) != 0) {
+                mod_logger_write(MOD_LOG_LEVEL_ERROR, "LessGrind", "Recipe rebuild failed");
+            }
+        }
     }
     if (setup) patchlib_free(setup);
 done:
