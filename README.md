@@ -22,7 +22,7 @@ cmake --preset android-arm64-release
 cmake --build --preset android-arm64-release
 ```
 
-构建产物为 `LessGrind.android.arm64.so`。
+构建产物为 `LessGrind.android.arm64.so`。GitHub Actions 会在编译结束后自动定位 CMake 实际生成的 `.so`，统一输出为此文件名。
 
 首次测试时，请查看日志中是否包含：
 
