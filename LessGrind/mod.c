@@ -1,32 +1,134 @@
 #include <stddef.h>
+
 #include "mod_core.h"
 #include "mod_logger.h"
 
-void (*mod_logger_write)(mod_log_level_t level, const char* tag, const char* fmt, ...) = NULL;
+
+void (*mod_logger_write)(
+    mod_log_level_t level,
+    const char* tag,
+    const char* fmt,
+    ...
+) = NULL;
+
 
 void less_grind_recipes_init(void);
+
 void less_grind_recipes_cleanup(void);
+
 void less_grind_drops_init(void);
+
 void less_grind_drops_cleanup(void);
 
-static void init_mod(kernel_mod_handle_t* handle) {
+
+/*
+ * MOD初始化。
+ */
+static void init_mod(
+    kernel_mod_handle_t* handle
+) {
+
     (void)handle;
+
+
+    mod_logger_write(
+        MOD_LOG_LEVEL_INFO,
+        "LessGrind",
+
+        "Terraria Less Grind "
+        "v1.0.4 initializing "
+        "(author: liuxin)"
+    );
+
+
+    /*
+     * 配方功能。
+     */
     less_grind_recipes_init();
+
+
+    /*
+     * 掉落功能。
+     */
     less_grind_drops_init();
-    mod_logger_write(MOD_LOG_LEVEL_INFO, "LessGrind", "v1.0.0 loaded");
+
+
+    mod_logger_write(
+        MOD_LOG_LEVEL_INFO,
+        "LessGrind",
+
+        "Terraria Less Grind "
+        "v1.0.4 initialized"
+    );
 }
 
-static void cleanup_mod(kernel_mod_handle_t* handle) {
+
+/*
+ * MOD卸载。
+ */
+static void cleanup_mod(
+    kernel_mod_handle_t* handle
+) {
+
     (void)handle;
+
+
     less_grind_drops_cleanup();
+
     less_grind_recipes_cleanup();
-    mod_logger_write(MOD_LOG_LEVEL_INFO, "LessGrind", "unloaded");
+
+
+    mod_logger_write(
+        MOD_LOG_LEVEL_INFO,
+        "LessGrind",
+
+        "Terraria Less Grind "
+        "v1.0.4 unloaded"
+    );
 }
 
+
+/*
+ * MOD信息。
+ */
 static kernel_mod_info_t g_info = {
-    .pkg_id = "celso.lessgrind", .version_code = 202608273,
-    .api_version = 1, .version = "1.0.3"
+
+    .pkg_id = "celso.lessgrind",
+
+    .version_code = 202608274,
+
+    .api_version = 1,
+
+    .version = "1.0.4"
 };
-static kernel_mod_info_t* get_info(void) { return &g_info; }
-static kernel_mod_ops_t g_ops = { init_mod, cleanup_mod, get_info };
-kernel_mod_ops_t* create_kernel_mod(void) { return &g_ops; }
+
+
+/*
+ * 获取MOD信息。
+ */
+static kernel_mod_info_t* get_info(void) {
+
+    return &g_info;
+}
+
+
+/*
+ * KernelLoader生命周期接口。
+ */
+static kernel_mod_ops_t g_ops = {
+
+    init_mod,
+
+    cleanup_mod,
+
+    get_info
+};
+
+
+/*
+ * KernelLoader入口。
+ */
+kernel_mod_ops_t* create_kernel_mod(void) {
+
+    return &g_ops;
+}
