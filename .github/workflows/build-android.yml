@@ -28,9 +28,16 @@ jobs:
       - name: Build native library
         run: cmake --build build/android-arm64 --parallel
 
+      - name: Collect Android ARM64 shared library
+        run: |
+          mkdir -p dist
+          so_file="$(find build/android-arm64 -type f -name 'LessGrind*.so' -print -quit)"
+          test -n "$so_file"
+          cp "$so_file" dist/LessGrind.android.arm64.so
+
       - name: Publish Android ARM64 shared library
         uses: actions/upload-artifact@v4
         with:
           name: LessGrind.android.arm64.so
-          path: build/android-arm64/LessGrind/LessGrind.android.arm64.so
+          path: dist/LessGrind.android.arm64.so
           if-no-files-found: error
