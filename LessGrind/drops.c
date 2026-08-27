@@ -44,17 +44,9 @@ void less_grind_drops_init(void) {
     if (g_common && g_register && populate) g_hook = patchlib_install_prepost_hook(populate, NULL, on_populate);
     if (populate) patchlib_free(populate);
 
-    /* Populate has normally completed before KernelLoader starts this mod.
-     * Main.ItemDropsDB is the already-built vanilla database; register now. */
-    patch_handle_t main_type = patchlib_type_get_type("Terraria", "Main");
-    if (main_type) {
-        g_item_drops_db = patchlib_type_get_field(main_type, "ItemDropsDB");
-        patch_handle_t database = PATCH_NULL;
-        if (g_item_drops_db) patchlib_field_get_value(g_item_drops_db, NULL, &database);
-        if (database) register_guaranteed_drops(database);
-        else mod_logger_write(MOD_LOG_LEVEL_WARNING, "LessGrind", "Main.ItemDropsDB is unavailable; waiting for Populate");
-        patchlib_free(main_type);
-    }
+    /* As with recipes, never mutate Main.ItemDropsDB during early mod
+     * initialization.  It is not safe until Terraria performs its normal
+     * Populate pass, which the installed postfix observes. */
 done:
     if (rule_type) patchlib_free(rule_type);
     if (db_type) patchlib_free(db_type);

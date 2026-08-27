@@ -103,20 +103,17 @@ void less_grind_recipes_init(void) {
     patch_handle_t setup = patchlib_type_get_method_by_param_count(recipe_type, "SetupRecipes", 0);
     if (g_main_recipes && g_recipe_create && g_recipe_required && g_item_type && g_item_stack && setup) {
         g_hook = patchlib_install_prepost_hook(setup, NULL, on_setup_recipes);
-        /* KernelLoader initializes mods after vanilla's first recipe build.
-         * Rebuild once now so the postfix runs in the current game session. */
-        if (g_hook != PATCH_HOOK_INVALID_ID) {
-            if (patchlib_method_invoke_args(setup, NULL, NULL, NULL) != 0) {
-                mod_logger_write(MOD_LOG_LEVEL_ERROR, "LessGrind", "Recipe rebuild failed");
-            }
-        }
+        /* Do not invoke SetupRecipes from mod initialization.  At this point
+         * Terraria has not finished constructing all of its recipe state;
+         * forcing a second execution aborts the IL2CPP runtime on 1.4.5.6.4.
+         * The installed postfix handles the next normal recipe refresh. */
     }
     if (setup) patchlib_free(setup);
 done:
     if (main_type) patchlib_free(main_type);
     if (recipe_type) patchlib_free(recipe_type);
     if (item_type) patchlib_free(item_type);
-    mod_logger_write(MOD_LOG_LEVEL_INFO, "LessGrind", "Recipe hook: %s",
+    mod_logger_write(MOD_LOG_LEVEL_INFO, "LessGrind", "Recipe hook: %s (no forced rebuild)",
         g_hook == PATCH_HOOK_INVALID_ID ? "failed" : "ready");
 }
 

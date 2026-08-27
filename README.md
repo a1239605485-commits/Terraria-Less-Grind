@@ -1,4 +1,4 @@
-# 轻松泰拉 / Terraria Less Grind v1.0.0
+# 轻松泰拉 / Terraria Less Grind v1.0.2
 
 适用于 TEF KernelLoader 的轻量原生模组工程（目标游戏版本 1.4.4.0–1.4.5.6）。
 
@@ -29,5 +29,5 @@ cmake --build --preset android-arm64-release
 ```text
 LessGrind: Recipe hook: ready
 LessGrind: Drop hook: ready
-LessGrind: Recipes updated:
+LessGrind: Recipe hook: ready (no forced rebuild)
 ```
