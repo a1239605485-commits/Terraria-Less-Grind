@@ -1,9 +1,9 @@
 {
   "pkgId": "celso.lessgrind",
   "name": "轻松泰拉 (Terraria Less Grind)",
-  "author": "Celso",
-  "version": "1.0.2",
-  "versionCode": 202608272,
+  "author": "liuxin",
+  "version": "1.0.3",
+  "versionCode": 202608273,
   "description": "减少重复刷取和制作，不改伤害、不送装备、不跳过 Boss。",
   "introduce": "建筑材料合成三倍、常用药水批量制作、Boss 召唤物降低制作成本、稀有材料击杀保底。",
   "features": ["QUALITY_OF_LIFE"],

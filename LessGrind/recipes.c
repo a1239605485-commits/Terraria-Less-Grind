@@ -84,7 +84,7 @@ static void apply_recipe_changes(void) {
         "Recipes updated: building=%d, potion=%d, Boss summon=%d", building, potions, summons);
 }
 
-static void on_setup_recipes(patch_handle_t instance, void** args, void* result,
+static void on_main_update(patch_handle_t instance, void** args, void* result,
                              const patch_method_signature_t* sig) {
     (void)instance; (void)args; (void)result; (void)sig;
     apply_recipe_changes();
@@ -100,20 +100,18 @@ void less_grind_recipes_init(void) {
     g_recipe_required = patchlib_type_get_field(recipe_type, "requiredItem");
     g_item_type = patchlib_type_get_field(item_type, "type");
     g_item_stack = patchlib_type_get_field(item_type, "stack");
-    patch_handle_t setup = patchlib_type_get_method_by_param_count(recipe_type, "SetupRecipes", 0);
-    if (g_main_recipes && g_recipe_create && g_recipe_required && g_item_type && g_item_stack && setup) {
-        g_hook = patchlib_install_prepost_hook(setup, NULL, on_setup_recipes);
-        /* Do not invoke SetupRecipes from mod initialization.  At this point
-         * Terraria has not finished constructing all of its recipe state;
-         * forcing a second execution aborts the IL2CPP runtime on 1.4.5.6.4.
-         * The installed postfix handles the next normal recipe refresh. */
-    }
-    if (setup) patchlib_free(setup);
+    /* KernelLoader loads after SetupRecipes, so observing it cannot change the
+     * already-built table.  Update(GameTime) runs only after game data is
+     * ready; the callback applies the edit once, without rebuilding recipes. */
+    patch_handle_t update = patchlib_type_get_method_by_param_count(main_type, "Update", 1);
+    if (g_main_recipes && g_recipe_create && g_recipe_required && g_item_type && g_item_stack && update)
+        g_hook = patchlib_install_prepost_hook(update, NULL, on_main_update);
+    if (update) patchlib_free(update);
 done:
     if (main_type) patchlib_free(main_type);
     if (recipe_type) patchlib_free(recipe_type);
     if (item_type) patchlib_free(item_type);
-    mod_logger_write(MOD_LOG_LEVEL_INFO, "LessGrind", "Recipe hook: %s (no forced rebuild)",
+    mod_logger_write(MOD_LOG_LEVEL_INFO, "LessGrind", "Recipe update hook: %s",
         g_hook == PATCH_HOOK_INVALID_ID ? "failed" : "ready");
 }
 

@@ -24,8 +24,8 @@ static void cleanup_mod(kernel_mod_handle_t* handle) {
 }
 
 static kernel_mod_info_t g_info = {
-    .pkg_id = "celso.lessgrind", .version_code = 202608272,
-    .api_version = 1, .version = "1.0.2"
+    .pkg_id = "celso.lessgrind", .version_code = 202608273,
+    .api_version = 1, .version = "1.0.3"
 };
 static kernel_mod_info_t* get_info(void) { return &g_info; }
 static kernel_mod_ops_t g_ops = { init_mod, cleanup_mod, get_info };
